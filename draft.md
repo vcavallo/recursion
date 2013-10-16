@@ -60,21 +60,76 @@ Here is some Ruby code for a real recursive function that computes the [Factoria
 ``` ruby
 
 	def factorial(number)
-		if number == 0
-			1
-		else
-			number * factorial(number-1)
-		end
+	  if number == 0
+	    1
+	  else
+	    number * factorial(number-1)
+	  end
 	end
+```
+```
+
+If you do `factorial(5)` you'll receive `120`.  
+Uh, ok I guess that makes sense. But how?  
+
+**WELL I'M GLAD YOU ASKED I'M SO EXCITED TO SHOW YOU!** (read on)
+
+Let's focus on this important line:  
+`number * factorial(number-1)`  
+When we pass `5` into the function, the first thing it hits is the `if` block. `5` is not equal to `0`, so we land in `else` - The important line I mentioned above. 
+
+let's evaluate it from left to right, replacing `number` with its value, `5`...
+
+`5 * (factorial(5-1))`  
+and again evaluating further…  
+`5 * (factorial(4))`
+
+Well hold on now. `factorial(4)` needs it's own evaluation. Back to the important line above, when we pass `4` into `factorial(number)` we get:  
+`4 * (factorial(4-1))`  
+or  
+`4 * factorial(3)`  
+
+So now altogether we have something like:
+
+`5 * ( 4 * factorial(3)) `
+
+Likewise, continuing to evaluate the Ruby expression factorial(3) we arrive at:
+
+`3 * factorial(2) `
+
+Replacing the expression with this value in our running chain we get: 
+
+`5 * ( 4 * ( 3 * factorial(2)))`
+
+Following the trend of evaluation... 
+
+`5 * ( 4 * ( 3 * ( 2 * factorial(1))))`
+
+...and one more time:
+
+`5 * ( 4 * ( 3 * ( 2 * ( 1 * factorial(0)))))`
+
+Hang on, something is different now. Look back up to the full method. Evaluating `factorial(0)` will land us in the `if` rather than the `else` part of the block. This part returns the value `1`, *not* another call to the `factorial ` method! Let's replace that nice gentle number into our chain:
+
+`5 * ( 4 * ( 3 * ( 2 * ( 1 * ( 1 )))))`
+
+Every time we get a bundled-up expression rather than a nice, unpacked, *math-able* return value, we're going to continue interpreting and replacing until we end up with something we can do arithmetic on.   
+
+## Interpret-O-Vision
+
+This is a dense topic and it can never hurt to be **more clear** - *a small confusion will recursively grow larger with no base case in sight!* - so let's see it a little more visually.  
+Here's stepping through `factorial(5)` like an interpreter..
 
 ```
 
-
-
-
-
-
-
+factorial(5) => is 5 == 0 ? no. return 5 * factorial(4) 
+    factorial(4) => is 4 == 0 ? no. return 4 * factorial(3)
+        factorial(3) => is 3 == 0 ? no. return 3 * factorial(2)
+            factorial(2) => is 2 == 0 ? no. return 2 * factorial(1)
+                factorial(1) => is 1 == 0 ? no. return 1 * factorial(0)
+                    factorial(0) => is 0 == 0 ? yes! return 1
+                    finally, nothing else to evalutate. we landed on a number.
+```
 
 
 
