@@ -55,7 +55,20 @@ So let's do that!
 
 ## Visuals, Examples, Graphs, Yay!
 
-Here is the code for a real 
+Here is some Ruby code for a real recursive function that computes the [Factorial](http://mathworld.wolfram.com/Factorial.html) of a number:
+
+``` ruby
+
+	def factorial(number)
+		if number == 0
+			1
+		else
+			number * factorial(number-1)
+		end
+	end
+
+```
+
 
 
 
