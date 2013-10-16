@@ -1,0 +1,1 @@
+system("irb < command.rb")

@@ -1,0 +1,64 @@
+stepping through factorial(5) like an interpreter..
+1.=> is 5 == 0 ? no. 5 * factorial(4)
+    2.=> is 4 == 0 ? no. 4 * factorial(3)
+        3.=> is 3 == 0 ? no. 3 * factorial(2)
+            4.=> is 2 == 0 ? no. 2 * factorial(1)
+                5.=> is 1 == 0 ? no. 1 * factorial(0)
+                    6.=> is 0 == 0 ? yes! 1
+
+
+=> the important line: [[number * factorial(number-1)]]
+
+let's evaluate it from left to right...
+
+5 * (factorial(4))
+
+well factorial(4) has it's own evaluation via the above line, which is:
+
+4 * factorial(3)
+
+so now we have:
+
+5 * ( 4 * factorial(3)) 
+
+continuing to evalute the ruby expression factorial(3) we arrive at:
+
+3 * factorial(2) 
+
+replacing the expression with the value in our running chain we get: 
+
+5 * ( 4 * ( 3 * factorial(2)))
+
+following the trend of evaluation... 
+
+5 * ( 4 * ( 3 * ( 2 * factorial(1))))
+
+and one more time:
+
+5 * ( 4 * ( 3 * ( 2 * ( 1 * factorial(0)))))
+
+finally we are about to get somewhere interesting! 
+
+when we evaluate factorial(0) the first thing we hit is the if block and number is indeed now == 0. so we return 1. let's put that in and see what it looks like:
+
+5 * ( 4 * ( 3 * ( 2 * ( 1 * ( 1 )))))
+
+cool. now it's just some math! starting all the way in the innermost parentheses, let's do some arithmetic. 
+
+5 * ( 4 * ( 3 * ( 2 * ( 1 * ( 1 )))))   
+
+(1*(1)) looks nicer as (1 * 1) so let's do that: 
+
+5 * ( 4 * ( 3 * ( 2 * ( 1 * 1 )))))   
+
+and then replace the value of 1*1 with it's result, 1. Then we're going to keep on doing that pattern all the way down the chain. hold on to your hat.
+
+5 * ( 4 * ( 3 * ( 2 * ( 1 ))))
+5 * ( 4 * ( 3 * ( 2 * 1 )))
+5 * ( 4 * ( 3 * ( 2 )))
+5 * ( 4 * ( 3 * 2 ))
+5 * ( 4 * ( 6 ))
+5 * ( 4 * 6 )
+5 * ( 24 )
+5 * 24
+120
