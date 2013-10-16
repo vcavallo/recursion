@@ -37,11 +37,14 @@ Let's notice and remember a few important things about the above code.
 
 You could say it is **repeated in a self-similar manner.** It doesn't open the same thing again and again - it opens a *next_thing*. So It's recursive! But in a special way because there's also that **if**. The **if** defines our *Base Case*. The thing that tells us to stop recursing. To avoid tearing open the headphones.
 
-## Pause
+### Pause
+-----
 
 I forgot to tell you why I'm writing this. Recursion can be a bewildering topic for some. Before this post my understanding of it danced around the periphery of the concept. Yea, I knew what it meant and how it generally worked and about fractals and all that, but I couldn't *intuit* the workings of it - and more importantly, relative to my current endeavor: I didn't get how the heck a computer makes sense of it. I don't want to take such an interesting, complex and pragmatically useful topic on faith. I want to *get* it. If you feel the same way then please read on. I promise your understanding will be different by the end. 
 
-## Back to Learning!
+-----
+
+### Back to Learning!
 
 As I see it, the typical confusion when thinking about recursion (in terms of programming) comes from two sources: 
 
@@ -130,16 +133,82 @@ factorial(5) => is 5 == 0 ? no. return 5 * factorial(4)
                     factorial(0) => is 0 == 0 ? yes! return 1
                     finally, nothing else to evalutate. we landed on a number.
 ```
+*(I'm going to beat this into your/our head/s)*
+
+Now that we now that `factorial(0)` returns `1`, we can go up the stack and replace `factorial(0)` with `1`:
+
+```
+factorial(1) => return 1 * factorial(0) 
+factorial(1) => return 1 * (1)
+factorial(1) => return 1
+```
+
+Pop that back up a level in the Interpret-O-Vision, look for an expression for which you know the return value and substitute it...
+
+```
+factorial(2) => return 2 * factorial(1)
+factorial(2) => return 2 * (1)
+factorial(2) => return 2
+```
+
+Up a level again:
+
+```
+factorial(3) => return 3 * factorial(2)
+factorial(3) => return 3 * (2)
+factorial(3) => return 6
+```
+
+...
+
+```
+factorial(4) => return 4 * factorial(3)
+factorial(4) => return 4 * (6)
+factorial(4) => return 24
+```
+
+Last one!
+
+```
+factorial(5) => return 5 * factorial(4)
+factorial(5) => return 5 * (24)
+factorial(5) => return 120
+```
+
+And there we have it. `factorial(5)` returns `120` !
+
+## "Did Somebody Order Dominoes?""
+
+To really drive the point home in a beautiful pure number cascade. This is sort of what happens when the interpreter reaches the base case and can begin returning and *mathing* on values:
+
+```
+5 * ( 4 * ( 3 * ( 2 * ( 1 * ( 1 )))))   
+5 * ( 4 * ( 3 * ( 2 * ( 1 * 1 )))))  
+5 * ( 4 * ( 3 * ( 2 * ( 1 ))))
+5 * ( 4 * ( 3 * ( 2 * 1 )))
+5 * ( 4 * ( 3 * ( 2 )))
+5 * ( 4 * ( 3 * 2 ))
+5 * ( 4 * ( 6 ))
+5 * ( 4 * 6 )
+5 * ( 24 )
+5 * 24
+120
+```
+
+*It's beautiful*. When the interpreter can finally stop recursing and start returning, the big stack of self-similar calls falls back into itself like an imploding building. Finite recursion, while dense, is not entirely elusive. It's *infinite* recursion that is impossible to imagine (you think you're imagining it right now but you're merely imagining an infinitely small portion of it.)
 
 
+##Recursion is Fundamental to our Species
+Maybe you're sitting there thinking,
+> Duh… computers are stupid. This is boring. 
 
+That's ok! Recursion is still a really cool concept and has connections to biology and other parts of the natural world. Do you think humans are stupid, too? [There](http://www.edge.org/conversation/recursion-and-human-thought) are [theories](http://press.princeton.edu/titles/9424.html) that recursion is an integral part of what elevates human cognitive abilities from other non-human animals.  
+You can sort of see this yourself: ([solipsists](http://en.wikipedia.org/wiki/Solipsism), look away now) *I know that you're thinking and I know that you know that I know it.*  
+What is that if not a self-similar loop?! Don't take for granted the fact that you can imagine that very complex relationship with ease. I love my cat, but there's no way that he knows that I know that he's a cat. In his head it's all just like *"cat cat cat cat cat"*.   
+(I just tried to imagine his imagining without a base case to rescue me and almost got stuck in his head!)
 
+It only takes a small stretch of imagination to entertain the idea that our ability to recursively model other minds is at the root of our capacity for empathy. That is **cool.**
 
-
-
-
-
-
-
+-----
 \* - *Ripping Spacetime*, pretty awesome speed metal band name?
  
