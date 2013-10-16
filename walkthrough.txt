@@ -1,11 +1,5 @@
-stepping through factorial(5) like an interpreter..
-1.=> is 5 == 0 ? no. 5 * factorial(4)
-    2.=> is 4 == 0 ? no. 4 * factorial(3)
-        3.=> is 3 == 0 ? no. 3 * factorial(2)
-            4.=> is 2 == 0 ? no. 2 * factorial(1)
-                5.=> is 1 == 0 ? no. 1 * factorial(0)
-                    6.=> is 0 == 0 ? yes! 1
 
+just to be ultra-clear (a small confusion will recursively grow larger with no base case in sight!)
 
 => the important line: [[number * factorial(number-1)]]
 
@@ -37,22 +31,56 @@ and one more time:
 
 5 * ( 4 * ( 3 * ( 2 * ( 1 * factorial(0)))))
 
-finally we are about to get somewhere interesting! 
-
-when we evaluate factorial(0) the first thing we hit is the if block and number is indeed now == 0. so we return 1. let's put that in and see what it looks like:
-
 5 * ( 4 * ( 3 * ( 2 * ( 1 * ( 1 )))))
 
-cool. now it's just some math! starting all the way in the innermost parentheses, let's do some arithmetic. 
+each time we get an expression rather than a *math-able* return value, we're going to continue interpreting and replacing. to see it a little more visually, here's stepping through factorial(5) like an interpreter..
+
+factorial(5) => is 5 == 0 ? no. return 5 * factorial(4) 
+    factorial(4) => is 4 == 0 ? no. return 4 * factorial(3)
+        factorial(3) => is 3 == 0 ? no. return 3 * factorial(2)
+            factorial(2) => is 2 == 0 ? no. return 2 * factorial(1)
+                factorial(1) => is 1 == 0 ? no. return 1 * factorial(0)
+                    factorial(0) => is 0 == 0 ? yes! return 1
+
+                    finally, nothing else to evalutate. we landed on a number. 
+
+so now that we now that factorial(0) returns 1, we can go up the stack and replace factorial(0) with 1:
+
+factorial(1) => return 1 * factorial(0) 
+factorial(1) => return 1 * (1)
+factorial(1) => return 1
+
+now pop that back up a level again, look for an expression for which you know the return value and substitute it...
+
+factorial(2) => return 2 * factorial(1)
+factorial(2) => return 2 * (1)
+factorial(2) => return 2
+
+up a level again:
+
+factorial(3) => return 3 * factorial(2)
+factorial(3) => return 3 * (2)
+factorial(3) => return 6
+
+...
+
+factorial(4) => return 4 * factorial(3)
+factorial(4) => return 4 * (6)
+factorial(4) => return 24
+
+last one!
+
+factorial(5) => return 5 * factorial(4)
+factorial(5) => return 5 * (24)
+factorial(5) => return 120
+
+and there we have it. factorial(5) returns 120. 
+ 
+to really drive the point home in a beautiful pure number cascade: 
+
 
 5 * ( 4 * ( 3 * ( 2 * ( 1 * ( 1 )))))   
-
-(1*(1)) looks nicer as (1 * 1) so let's do that: 
-
-5 * ( 4 * ( 3 * ( 2 * ( 1 * 1 )))))   
-
-and then replace the value of 1*1 with it's result, 1. Then we're going to keep on doing that pattern all the way down the chain. hold on to your hat.
-
+5 * ( 4 * ( 3 * ( 2 * ( 1 * 1 )))))  
 5 * ( 4 * ( 3 * ( 2 * ( 1 ))))
 5 * ( 4 * ( 3 * ( 2 * 1 )))
 5 * ( 4 * ( 3 * ( 2 )))
@@ -62,3 +90,5 @@ and then replace the value of 1*1 with it's result, 1. Then we're going to keep 
 5 * ( 24 )
 5 * 24
 120
+
+you see the importance of the base case. when the interpreter can finally stop recursing and start returning, the big stack of self-similar calls falls back into itself like an imploding building. finite recursion, while dense, is not entirely elusive. It's *infinite* recursion that is impossible to imagine (you think you're imagining it right now but you're merely imagining an infinitely small portion of it.) 
