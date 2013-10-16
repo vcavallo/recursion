@@ -1,0 +1,17 @@
+open_thing(thing)
+  if not iphone, open_thing(next_thing)
+end
+
+you're in front of a mailbox with these instructions: 
+if you are not holding an iphone in your hand, open the next thing you can.
+repeat previous.
+
+since you have a thing (mailbox) that isn't an iphone, you open it and find a shipping box. it's a thing that isn't an iphone so you open it and find an iphone box. it's not an iphone and it's a thing, you open it and have both an iphone and a headphone box. you have an iphone so you stop. simple enough. 
+
+what if i left out the "if you're not holding an iphone" part? you're instructions would be:
+open the next thing you can.
+repeat previous.
+
+you'd have gotten to the iphone and headphone box part and then opened the next thing you could and you'd have a pair of headphones. since you're a good instruction follower, you'd maybe tear the headphones open and have some sort of little speaker in your hand. you'd rip that open and have some other electronics wizardry and keep going - before you know it you'd be ripping apart the fabric of spacetime - and that's what trying to imagine recursion can feel like if you're approaching it the wrong way: like the fabric of your brain is being shredded by a guy on a wild hunt for an iphone. well, not *specifically* like that, i guess.
+
+
